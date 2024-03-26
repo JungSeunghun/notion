@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Unsplash Search Widget</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <style>
+        /* Add your CSS styling here */
+        body { font-family: Arial, sans-serif; }
+        .image-container { margin-top: 20px; display: flex; flex-wrap: wrap; }
+        .image-container img { margin: 5px; width: 100px; height: 100px; object-fit: cover; }
+    </style>
+</head>
+<body>
+    <input type="text" id="searchInput" placeholder="Search Unsplash...">
+    <button onclick="searchImages()">Search</button>
+    <div class="image-container" id="imageContainer"></div>
+
+    <script>
+        function searchImages() {
+            const input = document.getElementById('searchInput');
+            const container = document.getElementById('imageContainer');
+            container.innerHTML = ''; // Clear previous results
+
+            axios.get(`https://api.unsplash.com/search/photos?query=${input.value}&client_id=5NKJ-EeanjgKxVDJqh8Q9IqJvEjykmgV4btwdYMbxUg`)
+                .then(response => {
+                    response.data.results.forEach(image => {
+                        const imgElement = document.createElement('img');
+                        imgElement.src = image.urls.small;
+                        container.appendChild(imgElement);
+                    });
+                })
+                .catch(error => console.error('Search error:', error));
+        }
+    </script>
+</body>
+</html>
