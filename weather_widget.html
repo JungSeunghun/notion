@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather Widget</title>
+</head>
+<body>
+    <div id="weather">
+        <h2>Weather in Your City</h2>
+        <p id="temperature"></p>
+        <p id="conditions"></p>
+    </div>
+
+    <script>
+        const apiKey = 'feb0ef0b056ebb15fca3af2d290f5749';
+        const city = 'Seoul';
+        const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('temperature').textContent = `Temperature: ${data.main.temp}°C`;
+                document.getElementById('conditions').textContent = `Conditions: ${data.weather[0].description}`;
+            })
+            .catch(error => console.error('Error:', error));
+    </script>
+</body>
+</html>
